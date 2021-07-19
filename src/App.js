@@ -1,22 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
-import Header from './page/components/Header';
-import Weather from './page/components/Weather';
-import Footer from './page/components/Footer';
+import Header from './page/common/Header';
+import Weather from './page/common/Weather';
+import Footer from './page/common/Footer';
+import './statics/iconfont/iconfont.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+        <header className="App-header">
         {/* <img src={logo} className="App-logo" alt="logo" /> */}
-		  <Header />
-      </header>
-	  <main>
-		  <Weather />
-	  </main>
-	  <footer>
-		  <Footer />
-	  </footer>
+            <Header />
+        </header>
+        <section>
+            <Weather />
+        </section>
+        <footer>
+            <Footer />
+        </footer>
     </div>
   );
 }

@@ -8,18 +8,18 @@ export const inputonChange = (e)=>{
             }
         })
         .then((res)=>{
-            dispatch( action_inputChanger(res.data) );
+            if(res.data.length === 0){
+                dispatch( action_hideList() );
+            }else{
+                dispatch( action_inputChanger(res.data) );
+                dispatch( action_ShowList() );
+            }
         })
         .catch((err)=>{
             console.log(err);
         })
     }
 }
-
-const action_inputChanger = (e)=>({
-    type: 'load_list_respond',
-    value: e
-});
 
 export const queryWeather = (lat,lon)=>{
     return (dispatch)=>{
@@ -33,23 +33,44 @@ export const queryWeather = (lat,lon)=>{
             }
         })
         .then((res)=>{
+            console.log(res.data);
             dispatch(action_queryWeather(res.data));
+            dispatch(loadingWeatherResult());
         })
         .catch((err)=>{
             console.log(err);
+        })
+        .then(()=>{
+            dispatch(action_hideList());
         });
     }
 }
 
-const action_queryWeather = (e)=>({
-    type:'load_forecast_info',
-    value: e,
+//hide List
+export const action_hideList = ()=>({
+    type : 'hide_list'
 })
+//show List
+export const action_ShowList = ()=>({
+    type : 'show_list'
+})
+//Input change trigger
+const action_inputChanger = (e)=>({
+    type: 'load_list_respond',
+    value: e
+});
 
+//respondLoading->true && respondLoaded->false(请求新的API，不抹去老STATE的状态但是把已加载修改成false)
+export const loadingListReult = ()=>({
+    type: 'loading_list_result',
+})
+//respondLoading->false && respondLoaded->true
 export const loadingWeatherResult = ()=>({
     type: 'loading_weather_result',
 })
 
-export const loadingListReult = ()=>({
-    type: 'loading_list_result',
+//加载所有API信息
+export const action_queryWeather = (e)=>({
+    type:'load_forecast_info',
+    value: e,
 })
