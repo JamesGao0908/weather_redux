@@ -74,3 +74,8 @@ export const action_queryWeather = (e)=>({
     type:'load_forecast_info',
     value: e,
 })
+
+//切换夜间模式
+export const nightMode_switch = () => ({
+    type: 'switch_nightmode',
+})

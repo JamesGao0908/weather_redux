@@ -1,14 +1,16 @@
 import React from 'react';
+
 import store from '../store';
-import 'antd/dist/antd.css';
 import * as actionsCreator from '../store/actionsCreator';
+
 import Loading from './components/Loading';
 import Welcome from './components/Welcome';
 import Time from './components/Time';
 import dayBg from '../../statics/backgrounds/clear-day.jpeg';
 import nightBg from '../../statics/backgrounds/clear-night.jpeg';
-import { Input, List, } from 'antd';
 
+import 'antd/dist/antd.css';
+import { Input, List, } from 'antd';
 import { InputWrapper, ResultWrapper, ResultWeather, 
     BasicInfoWrapper, TemperatureInfoWrapper, HourlyTempWrapper, ForecastWrapper } from './style';
 
@@ -28,6 +30,7 @@ export default class Weather extends React.Component{
         store.subscribe(this.handleStateChange);
     }
 
+    // for test
     componentDidMount(){
         axios.get('./apis/test.json').catch(err=>console.log(err)).then((res)=>{
             store.dispatch( actionsCreator.action_queryWeather(res.data) );
@@ -86,7 +89,8 @@ export default class Weather extends React.Component{
                 <ResultWeather style={{ backgroundImage: (this.state.current.is_day===1) ? `url(${dayBg})`:`url(${nightBg})` }}>
                     <BasicInfoWrapper>
                         <div className='locationInfo'>{this.state.location.name +' , '+this.state.location.region+' , '+this.state.location.country}</div>
-                        <div className='updatedInfo'><Time />{'    Last updated '+this.state.current.last_updated}</div>
+                        <div className='currentTime'><Time /></div>
+                        <div className='updatedInfo'>{'Last updated '+this.state.current.last_updated}</div>
                     </BasicInfoWrapper>
                     <TemperatureInfoWrapper>
                         <div className='majorWeatherInfo'>
@@ -104,7 +108,7 @@ export default class Weather extends React.Component{
                     <ForecastWrapper>
                     {
                         this.state.forecast.map((item,index)=>{
-                            return (<div className='forecast-day'>
+                            return (<div className='forecast-day' key={index}>
                                 <div>{item.date}</div>
                                 <div><img src={item.day.condition.icon} /></div>
                                 <div>{item.day.avgtemp_c+' °C'}</div>

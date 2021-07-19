@@ -9,7 +9,8 @@ const defaultState = {
     respondLoading: false,
     respondLoaded: false,
 
-    currentSelector: '0',
+    daySelector: '0',
+    nightmode: false,
 }
 
 export default (state=defaultState, action)=>{
@@ -46,6 +47,11 @@ export default (state=defaultState, action)=>{
         case 'show_list' :{
             const newState = JSON.parse(JSON.stringify(state));
             newState.listShow = true;
+            return newState;
+        }
+        case 'switch_nightmode' :{
+            const newState = JSON.parse(JSON.stringify(state));
+            newState.nightmode ? (newState.nightmode=false):(newState.nightmode=true);
             return newState;
         }
         default :

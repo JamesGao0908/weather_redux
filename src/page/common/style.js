@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 
-export const InputWrapper = styled.div``;
+
+// Weather part components
+export const InputWrapper = styled.div`
+    Input{
+        border-radius:10px;
+    }
+`;
 
 export const ResultWrapper  = styled.div`
     margin-top 30px;
@@ -9,28 +15,35 @@ export const ResultWrapper  = styled.div`
 export const ResultWeather = styled.div`
     display: flex;
     flex-direction: column;
-
     max-width:1024px;
     max-height:582px;
-
+    padding: 20px;
+    border-radius: 30px;
     color:white;
 `;
 
 export const BasicInfoWrapper = styled.div`
     display:flex;
-
     margin: 10px;
     padding: 10px;
+
     .locationInfo{
+        flex: 1;
         display: flex;
         align-content: center;
-        flex: 1;
     }
+
+    .currentTime{
+        flex:1;
+        align-content: center;
+        justify-content: center;
+    }
+
     .updatedInfo{
+        flex: 1;
         display: flex;
         align-content: center;
         justify-content: flex-end;
-        flex: 1;
     }
 `;
 
@@ -76,4 +89,25 @@ export const ForecastWrapper = styled.div`
         align-items: center;
     }
     
+`;
+
+// Header part components
+export const HeaderWrapper = styled.div`
+    display: flex;
+    height : 10%;
+    max-height: 64px;
+
+    > div {
+        flex : 1;
+    }
+
+    .descriptions{
+        padding: 5px;
+    }
+    .toggleSwitch{
+        display: flex;
+        justify-content: flex-end;
+        padding: 5px;
+        margin:20px;
+    }
 `;
