@@ -29,6 +29,7 @@ export default class Weather extends React.Component{
         this.handleQueryWeather = this.handleQueryWeather.bind(this);
         this.handleOnMouseOver = this.handleOnMouseOver.bind(this);
         this.handleSelectDay = this.handleSelectDay.bind(this);
+        this.handleOnMouseLeave = this.handleOnMouseLeave.bind(this);
         store.subscribe(this.handleStateChange);
     }
 
@@ -39,7 +40,9 @@ export default class Weather extends React.Component{
             store.dispatch( actionsCreator.loadingWeatherResult());
         })
         
-        // store.dispatch(({type:'loading_function_test'}))
+        setTimeout(() => {
+            store.dispatch(({type:'loading_function_test'}))
+        }, 3000);
     }
     /*
         每小时展示时间的小物件
@@ -106,6 +109,9 @@ export default class Weather extends React.Component{
     handleOnMouseOver(){
         store.dispatch( actionsCreator.action_ShowList() );
     }
+    handleOnMouseLeave(){
+        store.dispatch( actionsCreator.action_hideList() );
+    }
     handleSelectDay(e){
         store.dispatch( actionsCreator.selectDay(e));
     }
@@ -121,6 +127,7 @@ export default class Weather extends React.Component{
                 (this.state.listShow) ? (
                     <List bordered
                     onMouseOver = {this.handleOnMouseOver}
+                    onMouseLeave = {this.handleOnMouseLeave}
                     dataSource = {this.state.list}
                     renderItem = { (item)=>(<List.Item onClick={ ()=>{this.handleQueryWeather(item.lat,item.lon)} } > {item.name}</List.Item>) }/>
                 ):''
