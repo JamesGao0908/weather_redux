@@ -10,12 +10,15 @@ import dayBg from '../../statics/backgrounds/clear-day.jpeg';
 import nightBg from '../../statics/backgrounds/clear-night.jpeg';
 
 import 'antd/dist/antd.css';
-import { Input, List, Carousel} from 'antd';
+import { Input, List, Carousel,} from 'antd';
 import { InputWrapper, ResultWrapper, ResultWeather, 
     BasicInfoWrapper, TemperatureInfoWrapper, 
     HourlyTempWrapper, ForecastWrapper, SixHourChunk } from './style';
 
-import axios from 'axios';
+import { AimOutlined } from '@ant-design/icons';
+
+
+const { Search } = Input;
 
 export default class Weather extends React.Component{
 
@@ -30,11 +33,13 @@ export default class Weather extends React.Component{
         this.handleOnMouseOver = this.handleOnMouseOver.bind(this);
         this.handleSelectDay = this.handleSelectDay.bind(this);
         this.handleOnMouseLeave = this.handleOnMouseLeave.bind(this);
+        this.handleGPSQuery = this.handleGPSQuery.bind(this);
         store.subscribe(this.handleStateChange);
     }
 
     // Test Method / delete | change after complete!!!
     // componentDidMount(){
+    //     console.log('Helloworld');
     //     axios.get('./apis/test.json').catch(err=>console.log(err)).then((res)=>{
     //         store.dispatch( actionsCreator.action_queryWeather(res.data) );
     //         store.dispatch( actionsCreator.loadingWeatherResult());
@@ -49,6 +54,17 @@ export default class Weather extends React.Component{
         每小时展示时间的小物件
         考虑手机版屏幕适配调整
     */
+
+    handleGPSQuery(){
+        store.dispatch( actionsCreator.loadingListReult());
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition((res)=>{ 
+                store.dispatch( actionsCreator.queryWeather(res.coords.latitude,res.coords.longitude))
+            })
+        }else{
+           alert('您的浏览器不支持地理定位');
+        }
+    }
     handleChopHourlyInfo(){
         let i,j, temporary, chunk = 6;
         let hourArray = [];
@@ -120,13 +136,17 @@ export default class Weather extends React.Component{
         return (
             <>
             <InputWrapper>
-                <Input placeholder='Enter a location to check weather'
+                <Search placeholder='Enter a location'
                     onChange={this.handleInputonChange}
                     onFocus={this.handleInputonFocus}
-                    onBlur={this.handleInputonBlur}/>
+                    onBlur={this.handleInputonBlur}
+                    onSearch={this.handleGPSQuery}
+                    enterButton= {<AimOutlined />}
+                    />
                 {
                 (this.state.listShow) ? (
                     <List bordered
+                    style = {{ 'background': 'white', 'position':'absolute','width':'50%','zIndex':10}}
                     onMouseOver = {this.handleOnMouseOver}
                     onMouseLeave = {this.handleOnMouseLeave}
                     dataSource = {this.state.list}

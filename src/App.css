@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
+    position: relative;
 }
 
 .App-logo {
@@ -42,19 +43,23 @@
 }
 
 header{
-  flex: 1;
+    flex: 1;
+    position: absolute;
+    top: 0;
 }
 section{
-    flex:8;
-    max-width:1024px;
+    position: absolute;
+    top: 10%;
     width:100%;
+    max-width:1024px;
 }
 footer{
-    flex: 1;
+    position: absolute;
+    bottom: 0;
     width: 100%;
-    background-color: rgb(232, 235, 238);
+    height: 10%;
     margin-top: auto;
+    background-color: rgb(232, 235, 238);
     display: flex;
     justify-content: center;
-
 }

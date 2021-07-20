@@ -32,8 +32,14 @@ code {
 }
 
 div#root{
-    min-height: 100vh !important;
+    min-height: 100vh;
 }
+
+*{
+    box-sizing:border-box;
+}
+
 `
+
 
 export default GlobalStyle;

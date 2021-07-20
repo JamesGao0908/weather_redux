@@ -1,3 +1,5 @@
+
+
 const defaultState = {
     inputValue: '',
     list:[],
@@ -17,7 +19,7 @@ export default (state=defaultState, action)=>{
     switch(action.type) {
         case 'load_list_respond' :{
             const newState = JSON.parse(JSON.stringify(state));
-            newState.list = action.value;
+            newState.list = list,action.value;
             return newState;
         }
         case 'load_forecast_info' :{
