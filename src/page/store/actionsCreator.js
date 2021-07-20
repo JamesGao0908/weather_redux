@@ -60,11 +60,16 @@ const action_inputChanger = (e)=>({
     value: e
 });
 
-//respondLoading->true && respondLoaded->false(请求新的API，不抹去老STATE的状态但是把已加载修改成false)
+//【手动】修改/隐藏 respondLoaded->false
+export const changeRespondLoadedToFalse=()=>({
+    type:'change_respondLoaded_to_false'
+})
+
+//开始加载请求新信息，respondLoading->true && respondLoaded->false(请求新的API，不抹去老STATE的状态但是把已加载修改成false)
 export const loadingListReult = ()=>({
     type: 'loading_list_result',
 })
-//respondLoading->false && respondLoaded->true
+//加载完成新信息respondLoading->false && respondLoaded->true
 export const loadingWeatherResult = ()=>({
     type: 'loading_weather_result',
 })

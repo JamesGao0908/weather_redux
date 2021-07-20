@@ -34,16 +34,17 @@ export default class Weather extends React.Component{
     }
 
     // Test Method / delete | change after complete!!!
-    componentDidMount(){
-        axios.get('./apis/test.json').catch(err=>console.log(err)).then((res)=>{
-            store.dispatch( actionsCreator.action_queryWeather(res.data) );
-            store.dispatch( actionsCreator.loadingWeatherResult());
-        })
+    // componentDidMount(){
+    //     axios.get('./apis/test.json').catch(err=>console.log(err)).then((res)=>{
+    //         store.dispatch( actionsCreator.action_queryWeather(res.data) );
+    //         store.dispatch( actionsCreator.loadingWeatherResult());
+    //     })
         
-        setTimeout(() => {
-            store.dispatch(({type:'loading_function_test'}))
-        }, 3000);
-    }
+    //     setTimeout(() => {
+    //         store.dispatch(({type:'loading_function_test'}))
+    //     }, 3000);
+    // }
+
     /*
         每小时展示时间的小物件
         考虑手机版屏幕适配调整
@@ -119,7 +120,7 @@ export default class Weather extends React.Component{
         return (
             <>
             <InputWrapper>
-                <Input placeholder='Enter a location'
+                <Input placeholder='Enter a location to check weather'
                     onChange={this.handleInputonChange}
                     onFocus={this.handleInputonFocus}
                     onBlur={this.handleInputonBlur}/>
@@ -136,7 +137,7 @@ export default class Weather extends React.Component{
             <ResultWrapper>
             {
             (this.state.respondLoaded) ? (
-                <ResultWeather style={{ backgroundImage: (this.state.current.is_day===1) ? `url(${dayBg})`:`url(${nightBg})` }}>
+                <ResultWeather style={{ backgroundImage: (this.state.current.is_day === 1) ? `url(${dayBg})`:`url(${nightBg})` }}>
                     <BasicInfoWrapper>
                         <div className='locationInfo'>{this.state.location.name +' , '+this.state.location.region+' , '+this.state.location.country}</div>
                         <div className='currentTime'><Time /></div>
