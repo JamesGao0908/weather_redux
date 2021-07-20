@@ -54,6 +54,13 @@ export default (state=defaultState, action)=>{
             newState.nightmode ? (newState.nightmode=false):(newState.nightmode=true);
             return newState;
         }
+        // test function for loading components
+        case 'loading_function_test' :{
+            const newState = JSON.parse(JSON.stringify(state));
+            newState.respondLoading = true;
+            newState.respondLoaded = false;
+            return newState;
+        }
         default :
             return state;
     }

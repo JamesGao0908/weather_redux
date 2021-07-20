@@ -21,6 +21,15 @@ code {
     monospace;
 }
 
+
+.ant-carousel .slick-dots{
+    position: relative  !important;
+    margin-top:50px;
+}
+.ant-carousel{
+    margin-top:10px;
+    color : white !important;
+}
 `
 
 export default GlobalStyle;

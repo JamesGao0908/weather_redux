@@ -10,11 +10,13 @@ import dayBg from '../../statics/backgrounds/clear-day.jpeg';
 import nightBg from '../../statics/backgrounds/clear-night.jpeg';
 
 import 'antd/dist/antd.css';
-import { Input, List, } from 'antd';
+import { Input, List, Carousel} from 'antd';
 import { InputWrapper, ResultWrapper, ResultWeather, 
-    BasicInfoWrapper, TemperatureInfoWrapper, HourlyTempWrapper, ForecastWrapper } from './style';
+    BasicInfoWrapper, TemperatureInfoWrapper, 
+    HourlyTempWrapper, ForecastWrapper, SixHourChunk } from './style';
 
 import axios from 'axios';
+import reducer from '../store/reducer';
 
 export default class Weather extends React.Component{
 
@@ -36,6 +38,45 @@ export default class Weather extends React.Component{
             store.dispatch( actionsCreator.action_queryWeather(res.data) );
             store.dispatch( actionsCreator.loadingWeatherResult());
         })
+        
+        // store.dispatch(({type:'loading_function_test'}))
+    }
+
+    /*
+        每小时展示时间的小物件
+    */
+    handleChopHourlyInfo(){
+        let i,j, temporary, chunk = 6;
+        let hourArray = [];
+        const hourList = this.state.forecast[this.state.daySelector].hour;
+
+        for (i = 0,j = hourList.length; i < j; i += chunk) {
+            temporary = hourList.slice(i, i + chunk);
+            hourArray = [...hourArray,temporary];
+        }
+
+        return (<Carousel autoplay>
+            {
+                hourArray.map( (item,index)=>{
+                    return (
+                        <SixHourChunk key={index}>
+                        <div className='6trunk' key={index} style={{'display':'flex', 'justifyContent': 'center','alignItems': 'center','columnGap': '20px'}}>
+                        {
+                            item.map((tmpItem,tmpIndex)=>{
+                                return (
+                                        <div key={tmpIndex} style={{'display':'flex', 'justifyContent': 'center','alignItems': 'center','flexDirection': 'column'}}>
+                                            <div>{tmpItem.time}</div>
+                                            <div><img src={tmpItem.condition.icon} /></div>
+                                            <div>{tmpItem.temp_c}</div>
+                                        </div>)
+                            })
+                        }
+                        </div>
+                        </SixHourChunk>
+                    )
+                })
+            }
+        </Carousel>)
     }
 
     handleStateChange(){
@@ -104,7 +145,11 @@ export default class Weather extends React.Component{
                             <p>{'Feels like '+this.state.current.feelslike_c + ' °C'}</p>
                         </div>
                     </TemperatureInfoWrapper>
-                    <HourlyTempWrapper />
+                    <HourlyTempWrapper>
+                    {
+                        this.handleChopHourlyInfo()
+                    }
+                    </HourlyTempWrapper>
                     <ForecastWrapper>
                     {
                         this.state.forecast.map((item,index)=>{
@@ -114,7 +159,6 @@ export default class Weather extends React.Component{
                                 <div>{item.day.avgtemp_c+' °C'}</div>
                                 <div><i className='iconfont'>&#xe633;</i>{item.astro.sunrise}</div>
                                 <div><i className='iconfont'>&#xe632;</i>{item.astro.sunset}</div>
-                                
                             </div>)
                         })
                     }

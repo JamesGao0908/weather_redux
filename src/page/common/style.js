@@ -10,6 +10,12 @@ export const InputWrapper = styled.div`
 
 export const ResultWrapper  = styled.div`
     margin-top 30px;
+
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
 `;
 
 export const ResultWeather = styled.div`
@@ -111,3 +117,7 @@ export const HeaderWrapper = styled.div`
         margin:20px;
     }
 `;
+
+export const SixHourChunk = styled.div`
+
+`
