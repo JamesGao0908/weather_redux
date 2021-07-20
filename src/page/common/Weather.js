@@ -16,7 +16,6 @@ import { InputWrapper, ResultWrapper, ResultWeather,
     HourlyTempWrapper, ForecastWrapper, SixHourChunk } from './style';
 
 import axios from 'axios';
-import reducer from '../store/reducer';
 
 export default class Weather extends React.Component{
 
@@ -29,10 +28,11 @@ export default class Weather extends React.Component{
         this.handleInputonBlur = this.handleInputonBlur.bind(this);
         this.handleQueryWeather = this.handleQueryWeather.bind(this);
         this.handleOnMouseOver = this.handleOnMouseOver.bind(this);
+        this.handleSelectDay = this.handleSelectDay.bind(this);
         store.subscribe(this.handleStateChange);
     }
 
-    // for test
+    // Test Method / delete | change after complete!!!
     componentDidMount(){
         axios.get('./apis/test.json').catch(err=>console.log(err)).then((res)=>{
             store.dispatch( actionsCreator.action_queryWeather(res.data) );
@@ -41,9 +41,9 @@ export default class Weather extends React.Component{
         
         // store.dispatch(({type:'loading_function_test'}))
     }
-
     /*
         每小时展示时间的小物件
+        考虑手机版屏幕适配调整
     */
     handleChopHourlyInfo(){
         let i,j, temporary, chunk = 6;
@@ -54,20 +54,20 @@ export default class Weather extends React.Component{
             temporary = hourList.slice(i, i + chunk);
             hourArray = [...hourArray,temporary];
         }
-
+        // console.log(hourList);
         return (<Carousel autoplay>
             {
                 hourArray.map( (item,index)=>{
                     return (
                         <SixHourChunk key={index}>
-                        <div className='6trunk' key={index} style={{'display':'flex', 'justifyContent': 'center','alignItems': 'center','columnGap': '20px'}}>
+                        <div className='6trunk' key={index} style={{'display':'flex', 'justifyContent': 'center','alignItems': 'center','columnGap': '100px'}}>
                         {
                             item.map((tmpItem,tmpIndex)=>{
                                 return (
                                         <div key={tmpIndex} style={{'display':'flex', 'justifyContent': 'center','alignItems': 'center','flexDirection': 'column'}}>
-                                            <div>{tmpItem.time}</div>
+                                            <div>{tmpItem.time.substring(11)}</div>
                                             <div><img src={tmpItem.condition.icon} /></div>
-                                            <div>{tmpItem.temp_c}</div>
+                                            <div>{tmpItem.temp_c+' °C'}</div>
                                         </div>)
                             })
                         }
@@ -78,7 +78,6 @@ export default class Weather extends React.Component{
             }
         </Carousel>)
     }
-
     handleStateChange(){
         this.setState(store.getState());
     }
@@ -92,7 +91,7 @@ export default class Weather extends React.Component{
     /*
         1. 延迟500毫秒，让点击li先于此事件触发。不然li点击事件会触发不了
         2. listshow->false
-        3. 或许价格CSSTRANSITION
+        3. list触发时,添加CSStransition动画
     */
     handleInputonBlur(){
         setTimeout(()=>{
@@ -106,6 +105,9 @@ export default class Weather extends React.Component{
     }
     handleOnMouseOver(){
         store.dispatch( actionsCreator.action_ShowList() );
+    }
+    handleSelectDay(e){
+        store.dispatch( actionsCreator.selectDay(e));
     }
     render(){
         return (
@@ -153,7 +155,7 @@ export default class Weather extends React.Component{
                     <ForecastWrapper>
                     {
                         this.state.forecast.map((item,index)=>{
-                            return (<div className='forecast-day' key={index}>
+                            return (<div className={ (this.state.daySelector == index) ? 'forecast-day active' : 'forecast-day'} key={index} onClick={()=>this.handleSelectDay(index)} >
                                 <div>{item.date}</div>
                                 <div><img src={item.day.condition.icon} /></div>
                                 <div>{item.day.avgtemp_c+' °C'}</div>

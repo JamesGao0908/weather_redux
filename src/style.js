@@ -30,6 +30,10 @@ code {
     margin-top:10px;
     color : white !important;
 }
+
+div#root{
+    min-height: 100vh !important;
+}
 `
 
 export default GlobalStyle;

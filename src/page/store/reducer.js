@@ -61,6 +61,11 @@ export default (state=defaultState, action)=>{
             newState.respondLoaded = false;
             return newState;
         }
+        case 'select_day' :{
+            const newState = JSON.parse(JSON.stringify(state));
+            newState.daySelector = action.value;
+            return newState
+        }
         default :
             return state;
     }

@@ -23,7 +23,7 @@ export const ResultWeather = styled.div`
     flex-direction: column;
     max-width:1024px;
     max-height:582px;
-    padding: 20px;
+    padding-top: 20px;
     border-radius: 30px;
     color:white;
 `;
@@ -42,7 +42,12 @@ export const BasicInfoWrapper = styled.div`
     .currentTime{
         flex:1;
         align-content: center;
-        justify-content: center;
+        justify-content: flex-end;
+        display:flex;
+
+        div{
+            margin: 0 auto;
+        }
     }
 
     .updatedInfo{
@@ -93,8 +98,25 @@ export const ForecastWrapper = styled.div`
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        cursor:pointer;
+
+        &.active{
+            background-color:rgb(189, 245, 241);
+            color:black;
+            cursor:crosshair;
+        }
     }
-    
+
+    >div:first-child{
+        border-radius: 0 0 0 30px;
+    }
+    >div:last-child{
+        border-radius:0 0 30px 0;
+    }
+
+`;
+
+export const SixHourChunk = styled.div`
 `;
 
 // Header part components
@@ -118,6 +140,18 @@ export const HeaderWrapper = styled.div`
     }
 `;
 
-export const SixHourChunk = styled.div`
+// Footer part component
+export const FooterWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    row-gap: 10px;
+    width:100%;
+    text-align: center;
 
-`
+    &.active{
+        background: rgb(50,50,50);
+        color:white;
+    }
+`; 

@@ -79,3 +79,8 @@ export const action_queryWeather = (e)=>({
 export const nightMode_switch = () => ({
     type: 'switch_nightmode',
 })
+
+export const selectDay = (e)=>({
+    type:'select_day',
+    value:e
+})
