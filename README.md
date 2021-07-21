@@ -14,19 +14,20 @@ This is a simple weather appliation using reactJs.
 
 ## Structure of the application
 
-src
- |
- |---page
- |    |
- |    |---common
- |    |     |
- |    |     |---components ( saving functionalComponents, togglebutton... )
- |    |     |
- |    |     |---Header,Weather & Footer components
- |    |     |
- |    |     |---Style( customized styled-component including css )
- |    |
- |    |---store( applying redux, including actionsCreator,store and reducer )
- |
- |
- |---static( save statics files including backgrounds,svgs,background images,iconfront )
+src   
+ |   
+ |---page   
+ |    |   
+ |    |---common   
+ |    |     |   
+ |    |     |---components ( saving functionalComponents, togglebutton... )   
+ |    |     |   
+ |    |     |---Header,Weather & Footer components   
+ |    |     |   
+ |    |     |---Style( customized styled-component including css )   
+ |    |  
+ |    |---store( applying redux, including actionsCreator,store and reducer )   
+ |    
+ |    
+ |---static( save statics files including backgrounds,svgs,background images,iconfront )   
+  
