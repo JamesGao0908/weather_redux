@@ -21,6 +21,11 @@ export const inputonChange = (e)=>{
     }
 }
 
+export const changeValue = (e)=>({
+    type:'change_value',
+    value:e.target.value
+})
+
 export const queryWeather = (lat,lon)=>{
     return (dispatch)=>{
         axios.get('http://api.weatherapi.com/v1/forecast.json?',{
@@ -33,7 +38,8 @@ export const queryWeather = (lat,lon)=>{
             }
         })
         .then((res)=>{
-            console.log(res.data);
+            // console.log(res.data.location.name);
+            dispatch(action_changeInputValueAfterQuery(res.data.location.name))
             dispatch(action_queryWeather(res.data));
             dispatch(loadingWeatherResult());
         })
@@ -45,6 +51,11 @@ export const queryWeather = (lat,lon)=>{
         });
     }
 }
+
+const action_changeInputValueAfterQuery = (e)=>({
+    type:'change_input_value_after_query',
+    value:e
+})
 
 //hide List
 export const action_hideList = ()=>({

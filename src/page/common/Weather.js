@@ -50,11 +50,6 @@ export default class Weather extends React.Component{
     //     }, 3000);
     // }
 
-    /*
-        每小时展示时间的小物件
-        考虑手机版屏幕适配调整
-    */
-
     handleGPSQuery(){
         store.dispatch( actionsCreator.loadingListReult());
         if(navigator.geolocation){
@@ -65,6 +60,10 @@ export default class Weather extends React.Component{
            alert('您的浏览器不支持地理定位');
         }
     }
+    /*
+        每小时展示时间的小物件
+        考虑手机版屏幕适配调整
+    */
     handleChopHourlyInfo(){
         let i,j, temporary, chunk = 6;
         let hourArray = [];
@@ -102,6 +101,8 @@ export default class Weather extends React.Component{
         this.setState(store.getState());
     }
     handleInputonChange(e){
+        // console.log(e.target.value);
+        store.dispatch( actionsCreator.changeValue(e) );
         store.dispatch( actionsCreator.inputonChange(e) ); //onChange handle API call
     }
     handleInputonFocus(){
@@ -118,6 +119,9 @@ export default class Weather extends React.Component{
             store.dispatch( actionsCreator.action_hideList() );
         },500);
     }
+    /*
+        处理点击List中Li时间
+    */
     handleQueryWeather(lat,lon){
         store.dispatch( actionsCreator.action_hideList() ); //listshow->false
         store.dispatch( actionsCreator.loadingListReult() ); //respondLoading->true
@@ -137,6 +141,7 @@ export default class Weather extends React.Component{
             <>
             <InputWrapper>
                 <Search placeholder='Enter a location'
+                    value={ this.state.inputValue }
                     onChange={this.handleInputonChange}
                     onFocus={this.handleInputonFocus}
                     onBlur={this.handleInputonBlur}

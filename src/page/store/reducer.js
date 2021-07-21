@@ -1,5 +1,3 @@
-
-
 const defaultState = {
     inputValue: '',
     list:[],
@@ -17,9 +15,14 @@ const defaultState = {
 
 export default (state=defaultState, action)=>{
     switch(action.type) {
+        case 'change_value':{
+            const newState = JSON.parse(JSON.stringify(state));
+            newState.inputValue = action.value;
+            return newState;    
+        }
         case 'load_list_respond' :{
             const newState = JSON.parse(JSON.stringify(state));
-            newState.list = list,action.value;
+            newState.list = action.value;
             return newState;
         }
         case 'load_forecast_info' :{
@@ -72,6 +75,11 @@ export default (state=defaultState, action)=>{
             const newState = JSON.parse(JSON.stringify(state));
             newState.respondLoaded = false;
             return newState
+        }
+        case 'change_input_value_after_query':{
+            const newState = JSON.parse(JSON.stringify(state));
+            newState.inputValue = action.value;
+            return newState 
         }
         default :
             return state;
